@@ -9,10 +9,108 @@ import SwiftUI
 
 struct LoginView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            Header
+            Spacer()
+            TextFieldGroup
+            ButtonGroup
+            Spacer().frame(height:35)
+            SocialButtonGroup
+            Spacer().frame(height:39)
+            UMCImage
+            Spacer().frame(height:91)
+        }
+        .padding(.horizontal, 16)
+    }
+    
+    // 로그인 텍스트
+    private var Header: some View {
+        HStack {
+            Text("로그인")
+                .font(.PretendardSemiBold24)
+                .foregroundStyle(.black)
+        }
+    }
+    
+    // 아이디 및 비밀번호 입력
+    private var TextFieldGroup: some View {
+        VStack {
+            VStack{
+                TextField("아이디", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+                    .font(.PretendardMedium16)
+                    .foregroundStyle(Color.gray03)
+                Divider().foregroundStyle(Color.gray02)
+                Spacer().frame(height:40)
+                TextField("비밀번호", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+                    .font(.PretendardMedium16)
+                    .foregroundStyle(Color.gray03)
+                Divider().foregroundStyle(Color.gray02)
+                    .padding(.bottom, 74.98)
+            }.frame(height:86)
+        }
+    }
+    // 로그인 + 회원가입
+    private var ButtonGroup: some View {
+        VStack{
+            
+            Button(action: {}, label: {
+                ZStack{
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.purple03)
+                        .frame(height: 54)
+                    Text("로그인")
+                        .font(.PretendardBold18)
+                        .foregroundStyle(Color.white)
+                        .frame(width: 47, height: 36)
+                }
+            })
+            Spacer().frame(height:17)
+            Button("회원가입"){
+            }
+            .font(.PretendardMedium13)
+            .foregroundStyle(Color.gray04)
+        }
+    }
+    
+    // 소셜 미디어
+    private var SocialButtonGroup: some View {
+        HStack {
+            Button(action:{}, label: {
+                Image(.naver)
+            })
+            Spacer()
+
+            Button(action:{}, label:{
+                Image(.kakao)
+            })
+            Spacer()
+            Button(action:{}, label: {
+                Image(.apple)
+            })
+        }
+        .frame(width: 266, height: 40)
+    }
+    
+    // 홍보 이미지
+    private var UMCImage: some View {
+        Image(.umc1)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(height: 266)
     }
 }
+            
 
-#Preview {
-    LoginView()
+
+// 미리보기
+struct LoginView_Preview: PreviewProvider {
+    static var devices = ["iPhone 11", "iPhone 16 Pro Max"]
+    
+    static var previews: some View {
+        ForEach(devices, id: \.self) { device in
+            LoginView()
+                .previewDevice(PreviewDevice(rawValue: device))
+                .previewDisplayName(device)
+        }
+    }
 }
