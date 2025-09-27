@@ -8,6 +8,16 @@
 import SwiftUI
 
 struct LoginView: View {
+    
+    @Bindable var viewModel: LoginViewModel
+    
+    @AppStorage("id") var id:String = ""
+    @AppStorage("pwd") var pwd:String = ""
+    
+    init(viewModel:LoginViewModel){
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         VStack{
             Header
@@ -36,12 +46,12 @@ struct LoginView: View {
     private var TextFieldGroup: some View {
         VStack {
             VStack{
-                TextField("아이디", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+                TextField("아이디", text: $viewModel.loginModel.id)
                     .font(.PretendardMedium16)
                     .foregroundStyle(Color.gray03)
                 Divider().foregroundStyle(Color.gray02)
                 Spacer().frame(height:40)
-                TextField("비밀번호", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+                SecureField("비밀번호", text: $viewModel.loginModel.pwd)
                     .font(.PretendardMedium16)
                     .foregroundStyle(Color.gray03)
                 Divider().foregroundStyle(Color.gray02)
@@ -53,7 +63,10 @@ struct LoginView: View {
     private var ButtonGroup: some View {
         VStack{
             
-            Button(action: {}, label: {
+            Button(action: {
+                id = viewModel.loginModel.id
+                pwd = viewModel.loginModel.pwd
+            }, label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color.purple03)
@@ -108,7 +121,7 @@ struct LoginView_Preview: PreviewProvider {
     
     static var previews: some View {
         ForEach(devices, id: \.self) { device in
-            LoginView()
+            LoginView(viewModel: LoginViewModel())
                 .previewDevice(PreviewDevice(rawValue: device))
                 .previewDisplayName(device)
         }
