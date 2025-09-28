@@ -11,7 +11,7 @@ import SwiftUI
 struct MegaboxApp: App {
     var body: some Scene {
         WindowGroup {
-            UserInfoView()
+            LoginView(viewModel: LoginViewModel())
         }
     }
 }
