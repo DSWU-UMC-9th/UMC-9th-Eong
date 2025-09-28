@@ -13,13 +13,13 @@ struct UserInfoView: View {
     
     var body: some View {
         VStack{
-            Spacer().frame(height: 59)
             header
-            Spacer().frame(height: 15)
+                .padding(.top, 59)
+                .padding(.bottom, 15)
             memberShip
-            Spacer().frame(height: 33)
+                .padding(.bottom, 33)
             statusInfo
-            Spacer().frame(height: 33)
+                .padding(.bottom, 33)
             bottomImage
             Spacer()
         }

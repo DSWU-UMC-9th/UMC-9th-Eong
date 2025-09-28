@@ -17,9 +17,9 @@ struct UserSettingView: View {
     var body: some View {
         VStack {
             navigationTitle
-            Spacer().frame(height: 53)
+                .padding(.bottom, 53)
             userInfoText
-            Spacer().frame(height: 26)
+                .padding(.bottom, 26)
             userIdnName
             Spacer()
         }
