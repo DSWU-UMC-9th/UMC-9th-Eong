@@ -8,17 +8,27 @@
 import SwiftUI
 
 struct LoginView: View {
+    
+    @Bindable var viewModel: LoginViewModel
+    
+    @AppStorage("id") var id:String = ""
+    @AppStorage("pwd") var pwd:String = ""
+    
+    init(viewModel:LoginViewModel){
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         VStack{
             Header
             Spacer()
             TextFieldGroup
             ButtonGroup
-            Spacer().frame(height:35)
+                .padding(.bottom, 35)
             SocialButtonGroup
-            Spacer().frame(height:39)
+                .padding(.bottom, 39)
             UMCImage
-            Spacer().frame(height:91)
+                .padding(.bottom, 91)
         }
         .padding(.horizontal, 16)
     }
@@ -36,27 +46,31 @@ struct LoginView: View {
     private var TextFieldGroup: some View {
         VStack {
             VStack{
-                TextField("아이디", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+                TextField("아이디", text: $viewModel.loginModel.id)
                     .font(.PretendardMedium16)
-                    .foregroundStyle(Color.gray03)
-                Divider().foregroundStyle(Color.gray02)
+                    .foregroundStyle(.gray03)
+                Divider().foregroundStyle(.gray02)
                 Spacer().frame(height:40)
-                TextField("비밀번호", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
+                SecureField("비밀번호", text: $viewModel.loginModel.pwd)
                     .font(.PretendardMedium16)
-                    .foregroundStyle(Color.gray03)
-                Divider().foregroundStyle(Color.gray02)
+                    .foregroundStyle(.gray03)
+                Divider().foregroundStyle(.gray02)
                     .padding(.bottom, 74.98)
             }.frame(height:86)
         }
+
     }
     // 로그인 + 회원가입
     private var ButtonGroup: some View {
         VStack{
             
-            Button(action: {}, label: {
+            Button(action: {
+                id = viewModel.loginModel.id
+                pwd = viewModel.loginModel.pwd
+            }, label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.purple03)
+                        .fill(.purple03)
                         .frame(height: 54)
                     Text("로그인")
                         .font(.PretendardBold18)
@@ -68,8 +82,9 @@ struct LoginView: View {
             Button("회원가입"){
             }
             .font(.PretendardMedium13)
-            .foregroundStyle(Color.gray04)
+            .foregroundStyle(.gray04)
         }
+        
     }
     
     // 소셜 미디어
@@ -89,6 +104,7 @@ struct LoginView: View {
             })
         }
         .frame(width: 266, height: 40)
+        
     }
     
     // 홍보 이미지
@@ -97,6 +113,7 @@ struct LoginView: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(height: 266)
+            
     }
 }
             
@@ -108,7 +125,7 @@ struct LoginView_Preview: PreviewProvider {
     
     static var previews: some View {
         ForEach(devices, id: \.self) { device in
-            LoginView()
+            LoginView(viewModel: LoginViewModel())
                 .previewDevice(PreviewDevice(rawValue: device))
                 .previewDisplayName(device)
         }
