@@ -24,6 +24,9 @@ struct UserSettingView: View {
             Spacer()
         }
         .padding(.horizontal, 16)
+        .onAppear {
+            tempName = userName
+        }
     }
     
     private var navigationTitle: some View {
@@ -56,7 +59,7 @@ struct UserSettingView: View {
             HStack{
                 Text("\(id)")
                     .font(.PretendardMedium18)
-                    .foregroundStyle(.gray02)
+                    .foregroundStyle(.black)
                 Spacer()
             }
             Divider().foregroundStyle(.gray02)

@@ -108,42 +108,37 @@ struct UserInfoView: View {
 
     }
     
+    struct StatusItem: View {
+        let title: String
+        let value: String
+
+        var body: some View {
+            VStack(spacing: 9) {
+                Text(title)
+                    .font(.PretendardSemiBold16)
+                    .foregroundStyle(.gray02)
+                Text(value)
+                    .font(.PretendardSemiBold18)
+                    .foregroundStyle(.black)
+            }
+        }
+    }
+
     private var statusInfo: some View {
-        HStack{
-            VStack(spacing:9){
-                Text("쿠폰")
-                    .font(.PretendardSemiBold16)
-                    .foregroundStyle(.gray02)
-                Text("2")
-                    .font(.PretendardSemiBold18)
-                    .foregroundStyle(.black)
-            }
+        HStack {
+            StatusItem(title: "쿠폰", value: "2")
             
             Spacer()
             Divider().frame(width: 1, height: 31)
             Spacer()
             
-            VStack(spacing:9){
-                Text("스토어 교환권")
-                    .font(.PretendardSemiBold16)
-                    .foregroundStyle(.gray02)
-                Text("0")
-                    .font(.PretendardSemiBold18)
-                    .foregroundStyle(.black)
-            }
+            StatusItem(title: "스토어 교환권", value: "0")
             
             Spacer()
             Divider().frame(width: 1, height: 31)
             Spacer()
             
-            VStack(spacing:9){
-                Text("모바일 티켓")
-                    .font(.PretendardSemiBold16)
-                    .foregroundStyle(.gray02)
-                Text("0")
-                    .font(.PretendardSemiBold18)
-                    .foregroundStyle(.black)
-            }
+            StatusItem(title: "모바일 티켓", value: "0")
         }
         .padding(.horizontal, 24)
         .padding(.vertical, 12)
@@ -152,50 +147,35 @@ struct UserInfoView: View {
                 .stroke(.gray02, lineWidth: 1)
         )
     }
+
+    struct BottomItem: View{
+        let image: String
+        let text: String
+        
+        var body: some View{
+            VStack(spacing:12){
+                Image(image)
+                    .resizable()
+                    .frame(width: 36, height: 36)
+                Text(text)
+                    .font(.PretendardMedium16)
+                    .foregroundStyle(.black)
+            }
+        }
+        
+    }
     
     private var bottomImage: some View {
         HStack{
-            VStack(spacing:12){
-                Image(.movie)
-                    .resizable()
-                    .frame(width: 36, height: 36)
-                Text("영화별예매")
-                    .font(.PretendardMedium16)
-                    .foregroundStyle(.black)
-            }
             
+            BottomItem(image: "movie", text:"영화별예매")
             Spacer()
-            
-            VStack(spacing:12){
-                Image(.pin)
-                    .resizable()
-                    .frame(width: 36, height: 36)
-                Text("극장별예매")
-                    .font(.PretendardMedium16)
-                    .foregroundStyle(.black)
-            }
-            
+            BottomItem(image: "pin", text:"극장별예매")
             Spacer()
-            
-            VStack(spacing:12){
-                Image(.special)
-                    .resizable()
-                    .frame(width: 36, height: 36)
-                Text("특별관예매")
-                    .font(.PretendardMedium16)
-                    .foregroundStyle(.black)
-            }
-            
+            BottomItem(image: "special", text:"특별관예매")
             Spacer()
-            
-            VStack(spacing:12){
-                Image(.popcorn)
-                    .resizable()
-                    .frame(width: 36, height: 36)
-                Text("모바일오더")
-                    .font(.PretendardMedium16)
-                    .foregroundStyle(.black)
-            }
+            BottomItem(image: "popcorn", text:"모바일오더")
+
         }
     }
 }
