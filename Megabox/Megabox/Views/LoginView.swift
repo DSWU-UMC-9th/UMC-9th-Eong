@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    
+    @State private var router = Router()
     @Bindable var viewModel: LoginViewModel
     
     @AppStorage("id") var id:String = ""
@@ -19,18 +19,28 @@ struct LoginView: View {
     }
     
     var body: some View {
-        VStack{
-            Header
-            Spacer()
-            TextFieldGroup
-            ButtonGroup
-                .padding(.bottom, 35)
-            SocialButtonGroup
-                .padding(.bottom, 39)
-            UMCImage
-                .padding(.bottom, 91)
-        }
-        .padding(.horizontal, 16)
+        NavigationStack(path: $router.path){
+            VStack{
+                Header
+                Spacer()
+                TextFieldGroup
+                ButtonGroup
+                    .padding(.bottom, 35)
+                SocialButtonGroup
+                    .padding(.bottom, 39)
+                UMCImage
+                    .padding(.bottom, 91)
+            }
+            .padding(.horizontal, 16)
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .home:
+                    HomeView()
+                case .userSetting:
+                    UserSettingView()
+                }
+            }        }
+
     }
     
     // 로그인 텍스트
@@ -65,8 +75,11 @@ struct LoginView: View {
         VStack{
             
             Button(action: {
-                id = viewModel.loginModel.id
-                pwd = viewModel.loginModel.pwd
+//                id = viewModel.loginModel.id
+//                pwd = viewModel.loginModel.pwd
+                if id == viewModel.loginModel.id && pwd == viewModel.loginModel.pwd{
+                    router.push(.home)
+                }
             }, label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 10)

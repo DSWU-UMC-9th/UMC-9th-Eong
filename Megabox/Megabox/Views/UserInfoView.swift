@@ -8,22 +8,34 @@
 import SwiftUI
 
 struct UserInfoView: View {
+    @State private var router = Router()
     
     @AppStorage("userName") var userName: String = "이*원"
     
     var body: some View {
-        VStack{
-            header
-                .padding(.top, 59)
-                .padding(.bottom, 15)
-            memberShip
-                .padding(.bottom, 33)
-            statusInfo
-                .padding(.bottom, 33)
-            bottomImage
-            Spacer()
+        NavigationStack(path: $router.path){
+            VStack{
+                header
+                    .padding(.top, 59)
+                    .padding(.bottom, 15)
+                memberShip
+                    .padding(.bottom, 33)
+                statusInfo
+                    .padding(.bottom, 33)
+                bottomImage
+                Spacer()
+            }
+            .padding(.horizontal, 15)
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .home:
+                    HomeView()
+                case .userSetting:
+                    UserSettingView()
+                }
+            }
         }
-        .padding(.horizontal, 15)
+
     }
     
     private var header: some View {
@@ -46,7 +58,7 @@ struct UserInfoView: View {
                 Spacer()
                 
                 Button(action: {
-                    
+                    router.push(.userSetting)
                 }, label: {
                     Text("회원정보")
                         .font(.PretendardSemiBold14)
