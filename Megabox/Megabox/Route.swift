@@ -8,8 +8,10 @@
 import SwiftUI
 
 enum Route: Hashable {
+    case mainTab
     case home
     case userSetting
+    case movieDetail
 }
 
 

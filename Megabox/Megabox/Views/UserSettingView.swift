@@ -16,8 +16,8 @@ struct UserSettingView: View {
     
     var body: some View {
         VStack {
-            navigationTitle
-                .padding(.bottom, 53)
+//            navigationTitle
+//                .padding(.bottom, 53)
             userInfoText
                 .padding(.bottom, 26)
             userIdnName
@@ -26,7 +26,7 @@ struct UserSettingView: View {
         .padding(.horizontal, 16)
         .onAppear {
             tempName = userName
-        }
+        } .navigationTitle("회원정보관리")
     }
     
     private var navigationTitle: some View {

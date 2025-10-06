@@ -10,6 +10,7 @@ import SwiftUI
 struct MovieCardList: View {
     let movies: [MovieModel]
     let isUpcoming: Bool
+    let onSelect: (MovieModel) -> Void
 
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -19,20 +20,27 @@ struct MovieCardList: View {
                         movie.movieImage
                             .resizable()
                             .frame(width: 148, height: 212)
-
+                            .onTapGesture {
+                                onSelect(movie)
+                            }
                         if isUpcoming {
                             Spacer().frame(height: 16)
                         } else {
-                            Button("바로예매") {}
-                                .font(.PretendardMedium16)
-                                .foregroundStyle(.purple03)
-                                .frame(width: 148, height: 36)
-                                .background {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(.purple03, lineWidth: 1)
-                                        .fill(Color.clear)
-                                }
-                                .padding(.vertical, 8)
+                            Button(action: {
+                                
+                            }, label: {
+                                Text("바로예매")
+                                    .font(.PretendardMedium16)
+                                    .foregroundStyle(.purple03)
+                                    .frame(width: 148, height: 36)
+                                    .background {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(.purple03, lineWidth: 1)
+                                            .fill(Color.clear)
+                                    }
+                                    .padding(.vertical, 8)
+                            })
+
                         }
 
                         Text(movie.movieName)
@@ -55,5 +63,5 @@ struct MovieCardList: View {
 }
 
 #Preview {
-    MovieCardList(movies: HomeViewModel().movies, isUpcoming: true)
+    MovieCardList(movies: HomeViewModel().movies, isUpcoming: false, onSelect: {_ in })
 }

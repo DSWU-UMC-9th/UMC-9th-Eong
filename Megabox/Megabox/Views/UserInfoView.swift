@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct UserInfoView: View {
-    @State private var router = Router()
-    
+    @Environment(Router.self) private var router
     @AppStorage("userName") var userName: String = "이*원"
     
     var body: some View {
-        NavigationStack(path: $router.path){
             VStack{
                 header
                     .padding(.top, 59)
@@ -26,15 +24,7 @@ struct UserInfoView: View {
                 Spacer()
             }
             .padding(.horizontal, 15)
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .home:
-                    HomeView()
-                case .userSetting:
-                    UserSettingView()
-                }
-            }
-        }
+
 
     }
     
@@ -188,6 +178,7 @@ struct UserInfoView_Preview: PreviewProvider {
     static var previews: some View {
         ForEach(devices, id: \.self) { device in
             UserInfoView()
+                .environment(Router())
                 .previewDevice(PreviewDevice(rawValue: device))
                 .previewDisplayName(device)
         }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HeaderView: View {
+struct Header: View {
     var body: some View {
         VStack{
             Group{
@@ -48,5 +48,5 @@ struct headerButtonItem: View {
 
 
 #Preview {
-    HeaderView()
+    Header()
 }

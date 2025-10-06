@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var router = Router()
+    @Environment(Router.self) private var router
     @Bindable var viewModel: LoginViewModel
     
     @AppStorage("id") var id:String = ""
@@ -19,7 +19,7 @@ struct LoginView: View {
     }
     
     var body: some View {
-        NavigationStack(path: $router.path){
+
             VStack{
                 Header
                 Spacer()
@@ -32,14 +32,6 @@ struct LoginView: View {
                     .padding(.bottom, 91)
             }
             .padding(.horizontal, 16)
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .home:
-                    HomeView()
-                case .userSetting:
-                    UserSettingView()
-                }
-            }        }
 
     }
     
@@ -78,7 +70,8 @@ struct LoginView: View {
 //                id = viewModel.loginModel.id
 //                pwd = viewModel.loginModel.pwd
                 if id == viewModel.loginModel.id && pwd == viewModel.loginModel.pwd{
-                    router.push(.home)
+                    router.reset()
+                    router.push(.mainTab)
                 }
             }, label: {
                 ZStack{
@@ -139,6 +132,7 @@ struct LoginView_Preview: PreviewProvider {
     static var previews: some View {
         ForEach(devices, id: \.self) { device in
             LoginView(viewModel: LoginViewModel())
+                .environment(Router())
                 .previewDevice(PreviewDevice(rawValue: device))
                 .previewDisplayName(device)
         }
