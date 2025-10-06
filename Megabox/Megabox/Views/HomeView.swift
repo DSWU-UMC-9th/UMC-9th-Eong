@@ -8,62 +8,30 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var viewModel = HomeViewModel()
+    @State private var selected:SegmentButtons.Section = .chart
     
     var body: some View {
         ScrollView {
-            VStack{
-                header
+            LazyVStack{
+                HeaderView()
+                    .padding(.bottom, 9)
+                SegmentButtons(selected: $selected)
+                    .padding(.bottom, 25)
+                if selected == .chart {
+                    MovieCardList(movies: viewModel.movies, isUpcoming: false)
+                        .padding(.bottom, 38.5)
+                } else if selected == .upcoming {
+                    MovieCardList(movies: viewModel.upcomings, isUpcoming: true)
+                        .padding(.bottom, 38.5)
+                }
+
+                MovieFeed()
             }
             .padding(.horizontal, 16)
         }
     }
     
-    private var header : some View {
-        VStack{
-            Group{
-                Image(.meboxLogo)
-                    .resizable()
-                    .frame(width: 149, height: 30)
-
-                HStack{
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("홈")
-                            .font(.PretendardSemiBold24)
-                            .foregroundStyle(.black)
-                    })
-                    Spacer()
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("이벤트")
-                            .font(.PretendardSemiBold24)
-                            .foregroundStyle(.gray04)
-                    })
-                    Spacer()
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("스토어")
-                            .font(.PretendardSemiBold24)
-                            .foregroundStyle(.gray04)
-                    })
-                    Spacer()
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("선호극장")
-                            .font(.PretendardSemiBold24)
-                            .foregroundStyle(.gray04)
-                    })
-                }
-                .frame(width: 320)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
-
-    }
 }
 
 // 미리보기
