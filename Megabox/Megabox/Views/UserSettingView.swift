@@ -16,14 +16,17 @@ struct UserSettingView: View {
     
     var body: some View {
         VStack {
-            navigationTitle
-                .padding(.bottom, 53)
+//            navigationTitle
+//                .padding(.bottom, 53)
             userInfoText
                 .padding(.bottom, 26)
             userIdnName
             Spacer()
         }
         .padding(.horizontal, 16)
+        .onAppear {
+            tempName = userName
+        } .navigationTitle("회원정보관리")
     }
     
     private var navigationTitle: some View {
@@ -56,7 +59,7 @@ struct UserSettingView: View {
             HStack{
                 Text("\(id)")
                     .font(.PretendardMedium18)
-                    .foregroundStyle(.gray02)
+                    .foregroundStyle(.black)
                 Spacer()
             }
             Divider().foregroundStyle(.gray02)

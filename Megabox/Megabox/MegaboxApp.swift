@@ -9,9 +9,20 @@ import SwiftUI
 
 @main
 struct MegaboxApp: App {
+    @State private var router = Router()
+    
+    @AppStorage("id") var id : String = ""
+    @AppStorage("pwd") var pwd : String = ""
+    
+    init(){
+            id = "e0ng"
+            pwd = "1234"
+    }
+    
     var body: some Scene {
         WindowGroup {
-            LoginView(viewModel: LoginViewModel())
+            RootView()
+                .environment(router)
         }
     }
 }

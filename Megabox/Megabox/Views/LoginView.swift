@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    
+    @Environment(Router.self) private var router
     @Bindable var viewModel: LoginViewModel
     
     @AppStorage("id") var id:String = ""
@@ -19,18 +19,20 @@ struct LoginView: View {
     }
     
     var body: some View {
-        VStack{
-            Header
-            Spacer()
-            TextFieldGroup
-            ButtonGroup
-                .padding(.bottom, 35)
-            SocialButtonGroup
-                .padding(.bottom, 39)
-            UMCImage
-                .padding(.bottom, 91)
-        }
-        .padding(.horizontal, 16)
+
+            VStack{
+                Header
+                Spacer()
+                TextFieldGroup
+                ButtonGroup
+                    .padding(.bottom, 35)
+                SocialButtonGroup
+                    .padding(.bottom, 39)
+                UMCImage
+                    .padding(.bottom, 91)
+            }
+            .padding(.horizontal, 16)
+
     }
     
     // 로그인 텍스트
@@ -65,8 +67,12 @@ struct LoginView: View {
         VStack{
             
             Button(action: {
-                id = viewModel.loginModel.id
-                pwd = viewModel.loginModel.pwd
+//                id = viewModel.loginModel.id
+//                pwd = viewModel.loginModel.pwd
+                if id == viewModel.loginModel.id && pwd == viewModel.loginModel.pwd{
+                    router.reset()
+                    router.push(.mainTab)
+                }
             }, label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 10)
@@ -126,6 +132,7 @@ struct LoginView_Preview: PreviewProvider {
     static var previews: some View {
         ForEach(devices, id: \.self) { device in
             LoginView(viewModel: LoginViewModel())
+                .environment(Router())
                 .previewDevice(PreviewDevice(rawValue: device))
                 .previewDisplayName(device)
         }
