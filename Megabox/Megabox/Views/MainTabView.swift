@@ -15,23 +15,20 @@ struct MainTabView: View {
     
     private var tabBar: some View {
         TabView {
-            HomeView(viewModel:homeViewModel)
-                .tabItem {
-                    Image(systemName: "house.fill")
-                    Text("홈") }
-            Text("바로예매")
-                .tabItem {
-                    Image(systemName: "play.laptopcomputer")
-                    Text("바로예매") }
-            Text("모바일 오더")
-                .tabItem {
-                    Image(systemName: "popcorn")
-                    Text("모바일 오더") }
-            UserInfoView()
-                .tabItem {
-                    Image(systemName: "person")
-                    Text("마이페이지") }
-        }.navigationBarBackButtonHidden(true)
+                    Tab("홈", systemImage: "house.fill") {
+                        HomeView(viewModel: homeViewModel)
+                    }
+                    Tab("바로예매", systemImage: "play.laptopcomputer") {
+                        Text("바로예매")
+                    }
+                    Tab("모바일 오더", systemImage: "popcorn") {
+                        Text("모바일 오더")
+                    }
+                    Tab("마이페이지", systemImage: "person") {
+                        UserInfoView()
+                    }
+                }
+                .navigationBarBackButtonHidden(true)
     }
 }
 
