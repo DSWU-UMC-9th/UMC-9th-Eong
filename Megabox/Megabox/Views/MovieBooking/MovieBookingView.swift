@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovieBookingView: View {
     @ObservedObject var viewModel: BookingViewModel
+    @State private var showingSheet = false
     
     var body: some View {
         NavigationStack{
@@ -37,6 +38,13 @@ struct MovieBookingView: View {
                     }
                     
                 }.padding(.horizontal,16)
+            }
+            .sheet(isPresented: $showingSheet) {
+                MovieSheet(viewModel: MovieSheetViewModel(movies: viewModel.movies)){movie in
+                    viewModel.selectedMovie = movie
+                    showingSheet.toggle()
+                }
+                .presentationDragIndicator(.visible)
             }
             .safeAreaInset(edge: .top, alignment: .center, spacing: nil) {
                 Text("영화별 예매")
@@ -75,7 +83,7 @@ struct MovieBookingView: View {
                     Spacer()
                 }
                 Button(action: {
-                    
+                    showingSheet.toggle()
                 }, label: {
                     Text("전체영화")
                         .font(.PretendardSemiBold14)
@@ -90,7 +98,7 @@ struct MovieBookingView: View {
             
             ScrollView(.horizontal, showsIndicators: false){
                 LazyHStack(spacing:8){
-                    ForEach(viewModel.movies) { movie in
+                    ForEach(viewModel.movies, id:\.id) { movie in
                         movie.poster
                             .resizable()
                             .frame(width: 62, height: 89)

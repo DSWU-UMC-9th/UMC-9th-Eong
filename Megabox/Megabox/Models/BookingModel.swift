@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct Movie:Identifiable {
+struct Movie:Identifiable, Equatable {
     let id: UUID = UUID()
     let title: String
     let grade: String
