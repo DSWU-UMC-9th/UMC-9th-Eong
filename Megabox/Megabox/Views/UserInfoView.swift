@@ -42,7 +42,7 @@ struct UserInfoView: View {
                     .padding(.vertical, 4)
                     .background(
                         RoundedRectangle(cornerRadius: 6)
-                            .foregroundStyle(.tag)
+                            .foregroundStyle(.etcTag)
                     )
                 
                 Spacer()
