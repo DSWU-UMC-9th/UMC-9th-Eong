@@ -232,19 +232,19 @@ class BookingViewModel: ObservableObject {
 
 
     // date 값 생성 : 년, 월, 일, 시, 분
-    private static func makeDate(year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Date {
-        var cal = Calendar.current
-        cal.timeZone = seoul
-        var comp = DateComponents()
-        comp.timeZone = seoul
-        comp.year = year
-        comp.month = month
-        comp.day = day
-        comp.hour = hour
-        comp.minute = minute
-        comp.second = 0
-        return cal.date(from: comp)!
-    }
+//    private static func makeDate(year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Date {
+//        var cal = Calendar.current
+//        cal.timeZone = seoul
+//        var comp = DateComponents()
+//        comp.timeZone = seoul
+//        comp.year = year
+//        comp.month = month
+//        comp.day = day
+//        comp.hour = hour
+//        comp.minute = minute
+//        comp.second = 0
+//        return cal.date(from: comp)!
+//    }
 
     private var moviesById: [UUID: Movie] {
         Dictionary(uniqueKeysWithValues: movies.map { ($0.id, $0) })
