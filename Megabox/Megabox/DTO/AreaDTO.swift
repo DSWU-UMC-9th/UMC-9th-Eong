@@ -13,7 +13,7 @@ struct AreaDTO : Codable {
 }
 
 struct AreaMapper {
-    static func toDomain(from dto : AreaDTO, movieId: String) -> (Theater, [Room], [Show]){
+    static func toDomain(from dto : AreaDTO, movieId: String, date : String) -> (Theater, [Room], [Show]){
         let theaterId = dto.area
         let theater = Theater(id: theaterId, name: dto.area)
         
@@ -21,9 +21,12 @@ struct AreaMapper {
         var allShows: [Show] = []
 
         for itemDTO in dto.items {
-            let (room, shows) = ItemMapper.toDomain(from: itemDTO,
-                                                    movieId: movieId,
-                                                    theaterId: theaterId)
+            let (room, shows) = ItemMapper.toDomain(
+                from: itemDTO,
+                movieId: movieId,
+                theaterId: theaterId,
+                date: date
+            )
             allRooms.append(room)
             allShows.append(contentsOf: shows)
         }

@@ -19,13 +19,16 @@ struct ScheduleMapper {
         var allShows : [Show] = []
         
         for areaDTO in dto.areas {
-            let (theater, rooms, shows) = AreaMapper.toDomain(from: areaDTO, movieId: movieId)
+            let (theater, rooms, shows) = AreaMapper.toDomain(
+                from: areaDTO,
+                movieId: movieId,
+                date: dto.date
+            )
             
             allTheaters.append(theater)
             allRooms.append(contentsOf : rooms)
             allShows.append(contentsOf : shows)
         }
-        
         return (allTheaters, allRooms, allShows)
     }
 }

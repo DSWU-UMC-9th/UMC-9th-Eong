@@ -10,19 +10,25 @@ import Foundation
 struct ItemDTO : Codable {
     let auditorium : String
     let format : String
-    let showTimes : [ShowTimeDTO]
+    let showtimes : [ShowTimeDTO]
 }
 
 struct ItemMapper {
-    static func toDomain(from dto: ItemDTO, movieId: String, theaterId: String) -> (Room, [Show]){
-        let roomId = "\(theaterId)_\(dto.auditorium)"
+    static func toDomain(from dto: ItemDTO, movieId: String, theaterId: String, date:String) -> (Room, [Show]){
+        let roomId = "\(theaterId)_\(dto.auditorium)_\(date)"
         let room = Room(
                     id: roomId,
                     theaterId: theaterId,
                     name: dto.auditorium
                 )
-        let shows = dto.showTimes.map {
-            ShowTimeMapper.toDomain(from: $0, movieId: movieId, theaterId: theaterId, roomId: roomId)
+        let shows = dto.showtimes.map {
+            ShowTimeMapper.toDomain(
+                            from: $0,
+                            movieId: movieId,
+                            theaterId: theaterId,
+                            roomId: roomId,
+                            date: date
+                        )
         }
         return (room, shows)
     }

@@ -23,12 +23,12 @@ struct MovieDTO : Codable {
 }
 
 struct MovieMapper {
-    static func map(from dto: MovieDTO) -> (Movie, [Theater], [Room], [Show]) {
+    static func toDomain(from dto: MovieDTO) -> (Movie, [Theater], [Room], [Show]) {
         
         let runningTime = dto.schedules.first?
             .areas.first?
             .items.first?
-            .showTimes.first
+            .showtimes.first
             .map { ShowTimeMapper.runningTime(from: $0) } ?? 0
 
         let movie = Movie(
@@ -36,7 +36,7 @@ struct MovieMapper {
             title: dto.title,
             grade: dto.ageRating,
             poster: Image(dto.title),
-            runningTime: 0
+            runningTime: runningTime
         )
         
         var allTheaters: [Theater] = []
@@ -51,7 +51,9 @@ struct MovieMapper {
             allShows.append(contentsOf: show)
             
         }
-        
-        return (movie, allTheaters, allRooms, allShows)
+        print("🎬 변환된 영화:", dto.title, "상영 수:", allShows.count)
+        let uniqueTheaters = Array(Set(allTheaters))
+
+        return (movie, uniqueTheaters, allRooms, allShows)
     }
 }

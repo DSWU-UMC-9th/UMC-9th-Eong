@@ -15,7 +15,7 @@ struct Movie:Identifiable, Equatable {
     let runningTime: Int
 }
 
-struct Theater : Identifiable {
+struct Theater : Identifiable, Hashable {
     let id: String
     let name: String
 }

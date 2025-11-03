@@ -19,7 +19,7 @@ struct MainTabView: View {
                         HomeView(viewModel: homeViewModel)
                     }
                     Tab("바로예매", systemImage: "play.laptopcomputer") {
-                        Text("바로예매")
+                        MovieBookingView(viewModel: BookingViewModel())
                     }
                     Tab("모바일 오더", systemImage: "popcorn") {
                         Text("모바일 오더")

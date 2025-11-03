@@ -15,16 +15,15 @@ struct ShowTimeDTO: Codable {
 }
 
 struct ShowTimeMapper {
-    static func toDomain(from dto: ShowTimeDTO, movieId: String, theaterId: String, roomId: String) -> Show {
+    static func toDomain(from dto: ShowTimeDTO, movieId: String, theaterId: String, roomId: String, date : String) -> Show {
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
 
         let startStr = dto.start ?? "00:00"
-        let endStr = dto.end ?? startStr
-        let startAt = formatter.date(from: startStr) ?? Date()
-        let endAt = formatter.date(from: endStr) ?? startAt
+        let combined = "\(date) \(startStr)"
+        let startAt = formatter.date(from: combined) ?? Date()
 
         let bookedSeats = dto.total - dto.available
 
