@@ -11,10 +11,13 @@ import Combine
 
 
 class BookingViewModel: ObservableObject {
-    @Published var movies:[Movie]
-    @Published var theaters:[Theater]
-    @Published var rooms:[Room]
-    @Published var shows:[Show]
+    @Published var isLoading:Bool = false
+    @Published var errorMessage:String? = nil
+    
+    @Published var movies:[Movie] = []
+    @Published var theaters:[Theater] = []
+    @Published var rooms:[Room] = []
+    @Published var shows:[Show] = []
     
     @Published var selectedMovie:Movie?
     @Published var selectedTheater:[Theater] = []
@@ -35,143 +38,10 @@ class BookingViewModel: ObservableObject {
 
     
     init(){
-        let movies:[Movie] = [
-            .init(title: "F1 더 무비",grade: "15", poster: .init(.posterF1), runningTime: 148),
-            .init(title: "극장판 귀멸의 칼날: 무한성편",grade: "15", poster: .init(.posterDemonSlayer),runningTime: 148),
-            .init(title: "어쩔수가없다", grade: "15",poster: .init(.posterNoOtherChoic),runningTime: 148),
-            .init(title: "얼굴", grade: "15",poster: .init(.posterFace),runningTime: 148),
-            .init(title: "모노노케 히메", grade: "15",poster: .init(.posterPrincessMononoke),runningTime: 148),
-            .init(title: "보스", grade: "15",poster: .init(.posterBoss),runningTime: 148),
-            .init(title: "완벽한 이혼",grade: "15", poster: .init(.posterTheRose),runningTime: 148),
-            .init(title: "야당", grade: "15",poster: .init(.posterYadang),runningTime: 148)
-        ]
-        let theaters:[Theater] = [
-            .init(name: "강남"),
-            .init(name: "홍대"),
-            .init(name: "신촌")
-        ]
-        
-        let rooms:[Room] = [
-            .init(theaterId: theaters[0].id, name: "크리클라이너 1관"),
-            .init(theaterId: theaters[1].id, name: "BTS관 (7층 1관 [Laser])"),
-            .init(theaterId: theaters[1].id, name: "BTS관 (9층 2관 [Laser])")
-        ]
-        
-
-        let shows:[Show] = [
-            // 강남
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[0].id,
-                roomId: rooms[0].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 11, minute: 30),
-                totalSeats: 116,
-                bookedSeats: 7
-            ),
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[0].id,
-                roomId: rooms[0].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 14, minute: 20),
-                totalSeats: 116,
-                bookedSeats: 97
-            ),
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[0].id,
-                roomId: rooms[0].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 17, minute: 05),
-                totalSeats: 116,
-                bookedSeats: 115
-            ),
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[0].id,
-                roomId: rooms[0].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 19, minute: 45),
-                totalSeats: 116,
-                bookedSeats: 16
-            ),
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[0].id,
-                roomId: rooms[0].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 22, minute: 20),
-                totalSeats: 116,
-                bookedSeats: 0
-            ),
-            
-            // 홍대 - 1
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[1].id,
-                roomId: rooms[1].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 9, minute: 30),
-                totalSeats: 116,
-                bookedSeats: 41
-            ),
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[1].id,
-                roomId: rooms[1].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 12, minute: 00),
-                totalSeats: 116,
-                bookedSeats: 14
-            ),
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[1].id,
-                roomId: rooms[1].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 14, minute: 45),
-                totalSeats: 116,
-                bookedSeats: 28
-            ),
-            
-            //홍대 - 2
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[1].id,
-                roomId: rooms[2].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 11, minute: 30),
-                totalSeats: 116,
-                bookedSeats:82
-            ),
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[1].id,
-                roomId: rooms[2].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 14, minute: 10),
-                totalSeats: 116,
-                bookedSeats: 16
-            ),
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[1].id,
-                roomId: rooms[2].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 11, minute: 30),
-                totalSeats: 116,
-                bookedSeats: 103
-            ),
-            .init(
-                movieId: movies[0].id,
-                theaterId: theaters[1].id,
-                roomId: rooms[2].id,
-                startAt: BookingViewModel.makeDate(year: 2025, month: 10, day: 13, hour: 11, minute: 30),
-                totalSeats: 116,
-                bookedSeats: 24
-            )
-            
-        ]
-        
-        self.movies = movies
-        self.theaters = theaters
-        self.rooms = rooms
-        self.shows = shows
-        
         $selectedMovie
-                    .map { $0 != nil }
-                    .removeDuplicates()
-                    .assign(to: &$isTheaterSectionVisible)
+            .map { $0 != nil }
+            .removeDuplicates()
+            .assign(to: &$isTheaterSectionVisible)
         $selectedTheater
             .map { !$0.isEmpty }              
             .removeDuplicates()
@@ -190,10 +60,55 @@ class BookingViewModel: ObservableObject {
                         }
                     }
                 }
-                self.isShowCardsVisible = on     // ✅ DayBar와 동기화
+                self.isShowCardsVisible = on
             }
             .store(in: &bag)
         
+    }
+    
+    @MainActor
+    func fetchMovieSchedule() async {
+        print("📁 파일 경로:", Bundle.main.url(forResource: "MovieSchedule", withExtension: "json") ?? "없음")
+
+        isLoading = true
+        
+        guard let url = Bundle.main.url(
+            forResource: "MovieSchedule", withExtension: "json") else {
+            errorMessage = "MovieSchedule.json 파일이 없습니다."
+            return }
+        guard let data = try? Data(contentsOf: url) else {
+            errorMessage = "MovieSchedule.json을 불러오는 중 오류가 발생했습니다."
+            return }
+
+        do {
+            let response = try JSONDecoder().decode(APIResponse.self, from: data)
+            print("🎞️ 디코딩된 영화 수:", response.data.movies.count)
+            
+            var allMovies: [Movie] = []
+            var allTheaters: [Theater] = []
+            var allRooms: [Room] = []
+            var allShows: [Show] = []
+            
+            for movieDTO in response.data.movies {
+                let (movie, theaters, rooms, shows) = MovieMapper.toDomain(from: movieDTO)
+                allMovies.append(movie)
+                allTheaters.append(contentsOf: theaters)
+                allRooms.append(contentsOf: rooms)
+                allShows.append(contentsOf: shows)
+            }
+            
+            let uniqueTheaters = Array(Set(allTheaters))
+
+            self.movies = allMovies
+            self.theaters = uniqueTheaters
+            self.rooms = allRooms
+            self.shows = allShows
+            self.isLoading = false
+
+        } catch {
+            print("Decoding error:", error)
+            errorMessage = "데이터를 불러오는 중 문제가 발생했습니다."
+        }
     }
     
     // 극장 선택
@@ -231,28 +146,13 @@ class BookingViewModel: ObservableObject {
     }
 
 
-    // date 값 생성 : 년, 월, 일, 시, 분
-    private static func makeDate(year: Int, month: Int, day: Int, hour: Int, minute: Int) -> Date {
-        var cal = Calendar.current
-        cal.timeZone = seoul
-        var comp = DateComponents()
-        comp.timeZone = seoul
-        comp.year = year
-        comp.month = month
-        comp.day = day
-        comp.hour = hour
-        comp.minute = minute
-        comp.second = 0
-        return cal.date(from: comp)!
-    }
-
-    private var moviesById: [UUID: Movie] {
+    private var moviesById: [String: Movie] {
         Dictionary(uniqueKeysWithValues: movies.map { ($0.id, $0) })
     }
-    private var theatersById: [UUID: Theater] {
+    private var theatersById: [String: Theater] {
         Dictionary(uniqueKeysWithValues: theaters.map { ($0.id, $0) })
     }
-    private var roomsById: [UUID: Room] {
+    private var roomsById: [String: Room] {
         Dictionary(uniqueKeysWithValues: rooms.map { ($0.id, $0) })
     }
     
