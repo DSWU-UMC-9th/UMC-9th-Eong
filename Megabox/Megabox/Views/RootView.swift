@@ -12,6 +12,7 @@ import SwiftUI
 struct RootView: View {
     @Environment(Router.self) private var router
     @State private var homeViewModel = HomeViewModel()
+    @State private var isLoggedIn: Bool = false
 
     var body: some View {
         @Bindable var router = router 
@@ -30,6 +31,22 @@ struct RootView: View {
                         MovieDetailView(viewModel: homeViewModel)
                     }
                 }
+                .onAppear{
+                    checkLoginStatus()
+                    if isLoggedIn {
+                        router.reset()
+                        router.push(.mainTab)
+                    }
+                }
+        }
+    }
+    
+    private func checkLoginStatus() {
+        if let savedID = KeychainService.shared.loadUserID(),
+           KeychainService.shared.hasToken(for: savedID) {
+            isLoggedIn = true
+        } else {
+            isLoggedIn = false
         }
     }
 }

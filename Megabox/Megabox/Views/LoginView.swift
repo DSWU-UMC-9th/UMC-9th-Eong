@@ -11,8 +11,6 @@ struct LoginView: View {
     @Environment(Router.self) private var router
     @Bindable var viewModel: LoginViewModel
     
-    @AppStorage("id") var id:String = ""
-    @AppStorage("pwd") var pwd:String = ""
     
     init(viewModel:LoginViewModel){
         self.viewModel = viewModel
@@ -66,13 +64,7 @@ struct LoginView: View {
     private var ButtonGroup: some View {
         VStack{
             
-            Button(action: {
-//                id = viewModel.loginModel.id
-//                pwd = viewModel.loginModel.pwd
-                if id == viewModel.loginModel.id && pwd == viewModel.loginModel.pwd{
-                    router.reset()
-                    router.push(.mainTab)
-                }
+            Button(action: {login()
             }, label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 10)
@@ -120,6 +112,25 @@ struct LoginView: View {
             .aspectRatio(contentMode: .fit)
             .frame(height: 266)
             
+    }
+    
+    private func login(){
+        let inputID = viewModel.loginModel.id
+        let inputPwd = viewModel.loginModel.pwd
+        
+        let savedID = KeychainService.shared.loadUserID()
+        let savedPwd = KeychainService.shared.loadPassword()
+        
+        if inputID == savedID && inputPwd == savedPwd {
+            let token = TokenInfo(accessToken: "ACCESS_TOKEN_\(inputID)", refreshToken: "REFRESH_TOKEN_\(inputID)") // 임시
+            KeychainService.shared.saveToken(token, for: inputID)
+            
+            router.reset()
+            router.push(.mainTab)
+            
+        } else {
+            print("❌ 로그인 실패: 아이디 또는 비밀번호가 일치하지 않습니다.")
+        }
     }
 }
             
