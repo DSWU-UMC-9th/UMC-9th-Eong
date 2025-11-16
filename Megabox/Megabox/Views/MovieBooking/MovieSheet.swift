@@ -46,16 +46,16 @@ struct MovieSheet: View {
     }
 }
 
-#Preview {
-    let sampleMovies: [Movie] = [
-        .init(title: "F1 더 무비", grade: "15", poster: .init(.posterF1), runningTime: 148),
-        .init(title: "극장판 귀멸의 칼날: 무한성편", grade: "15", poster: .init(.posterDemonSlayer), runningTime: 148),
-        .init(title: "어쩔수가없다", grade: "15", poster: .init(.posterNoOtherChoic), runningTime: 148)
-    ]
-    MovieSheet(
-        viewModel: MovieSheetViewModel(movies: sampleMovies),
-        onTab: { movie in
-            print("선택한 영화: \(movie.title)")
-        }
-    )
-}
+//#Preview {
+//    let sampleMovies: [Movie] = [
+//        .init(title: "F1 더 무비", grade: "15", poster: .init(.posterF1), runningTime: 148),
+//        .init(title: "극장판 귀멸의 칼날: 무한성편", grade: "15", poster: .init(.posterDemonSlayer), runningTime: 148),
+//        .init(title: "어쩔수가없다", grade: "15", poster: .init(.posterNoOtherChoic), runningTime: 148)
+//    ]
+//    MovieSheet(
+//        viewModel: MovieSheetViewModel(movies: sampleMovies),
+//        onTab: { movie in
+//            print("선택한 영화: \(movie.title)")
+//        }
+//    )
+//}

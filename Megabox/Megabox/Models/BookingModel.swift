@@ -8,29 +8,29 @@
 import SwiftUI
 
 struct Movie:Identifiable, Equatable {
-    let id: UUID = UUID()
+    let id: String
     let title: String
     let grade: String
     let poster: Image
     let runningTime: Int
 }
 
-struct Theater : Identifiable {
-    let id: UUID = UUID()
+struct Theater : Identifiable, Hashable {
+    let id: String
     let name: String
 }
 
 struct Room : Identifiable {
-    let id: UUID = UUID()
-    let theaterId: UUID
+    let id: String
+    let theaterId: String
     let name: String
 }
 
 struct Show : Identifiable {
-    let id: UUID = UUID()
-    let movieId: UUID
-    let theaterId: UUID
-    let roomId: UUID
+    let id:String
+    let movieId: String
+    let theaterId: String
+    let roomId: String
     let startAt: Date
     let totalSeats: Int
     var bookedSeats: Int

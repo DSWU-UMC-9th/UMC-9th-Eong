@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UserInfoView: View {
     @Environment(Router.self) private var router
-    @AppStorage("userName") var userName: String = "이*원"
+    @State private var userName: String = ""
     
     var body: some View {
             VStack{
@@ -24,7 +24,11 @@ struct UserInfoView: View {
                 Spacer()
             }
             .padding(.horizontal, 15)
-
+            .onAppear {
+                if let userID = KeychainService.shared.loadUserID() {
+                    userName = UserDefaults.standard.string(forKey: "userName_\(userID)") ?? userID
+                }
+            }
 
     }
     

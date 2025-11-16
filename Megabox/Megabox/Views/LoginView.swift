@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import KakaoSDKUser
+import KakaoSDKAuth
+
 
 struct LoginView: View {
     @Environment(Router.self) private var router
     @Bindable var viewModel: LoginViewModel
     
-    @AppStorage("id") var id:String = ""
-    @AppStorage("pwd") var pwd:String = ""
     
     init(viewModel:LoginViewModel){
         self.viewModel = viewModel
@@ -66,13 +67,7 @@ struct LoginView: View {
     private var ButtonGroup: some View {
         VStack{
             
-            Button(action: {
-//                id = viewModel.loginModel.id
-//                pwd = viewModel.loginModel.pwd
-                if id == viewModel.loginModel.id && pwd == viewModel.loginModel.pwd{
-                    router.reset()
-                    router.push(.mainTab)
-                }
+            Button(action: {login()
             }, label: {
                 ZStack{
                     RoundedRectangle(cornerRadius: 10)
@@ -101,7 +96,9 @@ struct LoginView: View {
             })
             Spacer()
 
-            Button(action:{}, label:{
+            Button(action:{
+                startKakaoLogin()
+            }, label:{
                 Image(.kakao)
             })
             Spacer()
@@ -120,6 +117,63 @@ struct LoginView: View {
             .aspectRatio(contentMode: .fit)
             .frame(height: 266)
             
+    }
+    
+    private func login(){
+        let inputID = viewModel.loginModel.id
+        let inputPwd = viewModel.loginModel.pwd
+        
+        let savedID = KeychainService.shared.loadUserID()
+        let savedPwd = KeychainService.shared.loadPassword()
+        
+        if inputID == savedID && inputPwd == savedPwd {
+            let token = TokenInfo(accessToken: "ACCESS_TOKEN_\(inputID)", refreshToken: "REFRESH_TOKEN_\(inputID)") // 임시
+            KeychainService.shared.saveToken(token, for: inputID)
+            
+            router.reset()
+            router.push(.mainTab)
+            
+        } else {
+            print("❌ 로그인 실패: 아이디 또는 비밀번호가 일치하지 않습니다.")
+        }
+    }
+    
+    private func startKakaoLogin() {
+
+        if UserApi.isKakaoTalkLoginAvailable() {
+            UserApi.shared.loginWithKakaoTalk { token, error in
+                handleKakaoResult(token: token, error: error)
+            }
+        }
+
+        else {
+            UserApi.shared.loginWithKakaoAccount{ token, error in
+                handleKakaoResult(token: token, error: error)
+            }
+        }
+    }
+    
+    private func handleKakaoResult(token: OAuthToken?, error: Error?) {
+        if let error = error {
+            print("❌ 카카오 로그인 실패:", error)
+            return
+        }
+
+        guard let token = token else {
+            print("❌ 토큰 없음")
+            return
+        }
+
+        print("🎉 카카오 Access Token:", token.accessToken)
+
+        let tokenInfo = TokenInfo(
+            accessToken: token.accessToken,
+            refreshToken: token.refreshToken
+        )
+        KeychainService.shared.saveToken(tokenInfo, for: "kakaoToken")
+        
+        router.reset()
+        router.push(.mainTab)
     }
 }
             

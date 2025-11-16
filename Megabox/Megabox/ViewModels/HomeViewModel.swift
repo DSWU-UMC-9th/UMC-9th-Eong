@@ -11,9 +11,9 @@ import Foundation
 @Observable
 class HomeViewModel {
     let movies: [MovieModel] = [
-        .init(movieImage: .init(.posterNoOtherChoic), movieName: "어쩔수가없다", movieName_Eng: "No Other Choice", movieViewers: "20만"),
-        .init(movieImage: .init(.posterDemonSlayer), movieName: "극장판 귀멸의 칼날: 무한성편", movieName_Eng: "Demon Slayer: Kimetsu no Yaiba – The Movie: Infinity Castle", movieViewers: "1"),
-        .init(movieImage: .init(.posterF1), movieName: "F1 더 무비",movieName_Eng: "F1 : The Movie", movieViewers: "20만"),
+        .init(movieImage: .init(.어쩔수가없다), movieName: "어쩔수가없다", movieName_Eng: "No Other Choice", movieViewers: "20만"),
+        .init(movieImage: .init(.귀멸의칼날무한성), movieName: "극장판 귀멸의 칼날: 무한성편", movieName_Eng: "Demon Slayer: Kimetsu no Yaiba – The Movie: Infinity Castle", movieViewers: "1"),
+        .init(movieImage: .init(.f1더무비), movieName: "F1 더 무비",movieName_Eng: "F1 : The Movie", movieViewers: "20만"),
         .init(movieImage: .init(.posterFace), movieName: "얼굴",movieName_Eng: "The Ugly", movieViewers: "20만"),
         .init(movieImage: .init(.posterPrincessMononoke), movieName: "모노노케 히메",movieName_Eng: "Princess Mononoke", movieViewers: "20만")
     ]
@@ -24,9 +24,9 @@ class HomeViewModel {
     let upcomings: [MovieModel] = [
         .init(movieImage: .init(.posterPrincessMononoke), movieName: "모노노케 히메", movieName_Eng: "Princess Mononoke",movieViewers: "20만"),
         .init(movieImage: .init(.posterFace), movieName: "얼굴",movieName_Eng: "The Ugly", movieViewers: "20만"),
-        .init(movieImage: .init(.posterF1), movieName: "F1 더 무비",movieName_Eng: "F1 : The Movie", movieViewers: "20만"),
-        .init(movieImage: .init(.posterDemonSlayer), movieName: "극장판 귀멸의 칼날: 무한성편",movieName_Eng: "Demon Slayer: Kimetsu no Yaiba – The Movie: Infinity Castle", movieViewers: "1"),
-        .init(movieImage: .init(.posterNoOtherChoic), movieName: "어쩔수가없다",movieName_Eng: "No Other Choice", movieViewers: "20만")
+        .init(movieImage: .init(.f1더무비), movieName: "F1 더 무비",movieName_Eng: "F1 : The Movie", movieViewers: "20만"),
+        .init(movieImage: .init(.귀멸의칼날무한성), movieName: "극장판 귀멸의 칼날: 무한성편",movieName_Eng: "Demon Slayer: Kimetsu no Yaiba – The Movie: Infinity Castle", movieViewers: "1"),
+        .init(movieImage: .init(.어쩔수가없다), movieName: "어쩔수가없다",movieName_Eng: "No Other Choice", movieViewers: "20만")
     ]
     
     let feeds: [FeedModel] = [

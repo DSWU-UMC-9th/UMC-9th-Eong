@@ -56,6 +56,10 @@ struct MovieBookingView: View {
                     .background(.purple03)
             }
         }
+        .task {
+            print("🎬 MovieBookingView task 실행됨")
+            await viewModel.fetchMovieSchedule()
+        }
 
     }
 

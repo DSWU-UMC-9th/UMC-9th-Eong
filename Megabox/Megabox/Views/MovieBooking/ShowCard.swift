@@ -52,20 +52,20 @@ struct ShowCard: View {
     }
 }
 
-#Preview {
-    let vm = BookingViewModel()
-
-
-    let sample = vm.shows.first
-        ?? Show(
-            movieId: vm.movies[0].id,
-            theaterId: vm.theaters[0].id,
-            roomId: vm.rooms[0].id,
-            startAt: Date(),
-            totalSeats: 116,
-            bookedSeats: 107
-        )
-    ShowCard(show: sample)
-        .environmentObject(vm)
-
-}
+//#Preview {
+//    let vm = BookingViewModel()
+//
+//
+//    let sample = vm.shows.first
+//        ?? Show(
+//            movieId: vm.movies[0].id,
+//            theaterId: vm.theaters[0].id,
+//            roomId: vm.rooms[0].id,
+//            startAt: Date(),
+//            totalSeats: 116,
+//            bookedSeats: 107
+//        )
+//    ShowCard(show: sample)
+//        .environmentObject(vm)
+//
+//}

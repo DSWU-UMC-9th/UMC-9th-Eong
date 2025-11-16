@@ -9,15 +9,13 @@ import SwiftUI
 
 struct UserSettingView: View {
     
-    @AppStorage("id") var id : String = "lee"
-    @AppStorage("userName") var userName : String = "이상원"
+    @State var userId : String = ""
+    @State var userName : String = ""
     
     @State private var tempName: String = ""
     
     var body: some View {
         VStack {
-//            navigationTitle
-//                .padding(.bottom, 53)
             userInfoText
                 .padding(.bottom, 26)
             userIdnName
@@ -25,7 +23,12 @@ struct UserSettingView: View {
         }
         .padding(.horizontal, 16)
         .onAppear {
-            tempName = userName
+            if let id = KeychainService.shared.loadUserID() {
+                userId = id
+                userName = UserDefaults.standard.string(forKey: "userName_\(id)") ?? userId
+                tempName = userName
+
+            }
         } .navigationTitle("회원정보관리")
     }
     
@@ -57,7 +60,7 @@ struct UserSettingView: View {
     private var userIdnName: some View {
         VStack{
             HStack{
-                Text("\(id)")
+                Text("\(userId)")
                     .font(.PretendardMedium18)
                     .foregroundStyle(.black)
                 Spacer()
