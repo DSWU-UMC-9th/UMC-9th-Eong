@@ -10,9 +10,10 @@ import SwiftUI
 @main
 struct MegaboxApp: App {
     @State private var router = Router()
-    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     init(){
-        KeychainService.shared.resetKeychain()
+//        KeychainService.shared.resetKeychain()
         
         let id = "e0ng"
         let pwd = "1234"

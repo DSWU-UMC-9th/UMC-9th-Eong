@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import KakaoSDKUser
+import KakaoSDKAuth
+
 
 struct LoginView: View {
     @Environment(Router.self) private var router
@@ -93,7 +96,9 @@ struct LoginView: View {
             })
             Spacer()
 
-            Button(action:{}, label:{
+            Button(action:{
+                startKakaoLogin()
+            }, label:{
                 Image(.kakao)
             })
             Spacer()
@@ -131,6 +136,44 @@ struct LoginView: View {
         } else {
             print("❌ 로그인 실패: 아이디 또는 비밀번호가 일치하지 않습니다.")
         }
+    }
+    
+    private func startKakaoLogin() {
+
+        if UserApi.isKakaoTalkLoginAvailable() {
+            UserApi.shared.loginWithKakaoTalk { token, error in
+                handleKakaoResult(token: token, error: error)
+            }
+        }
+
+        else {
+            UserApi.shared.loginWithKakaoAccount{ token, error in
+                handleKakaoResult(token: token, error: error)
+            }
+        }
+    }
+    
+    private func handleKakaoResult(token: OAuthToken?, error: Error?) {
+        if let error = error {
+            print("❌ 카카오 로그인 실패:", error)
+            return
+        }
+
+        guard let token = token else {
+            print("❌ 토큰 없음")
+            return
+        }
+
+        print("🎉 카카오 Access Token:", token.accessToken)
+
+        let tokenInfo = TokenInfo(
+            accessToken: token.accessToken,
+            refreshToken: token.refreshToken
+        )
+        KeychainService.shared.saveToken(tokenInfo, for: "kakaoToken")
+        
+        router.reset()
+        router.push(.mainTab)
     }
 }
             
